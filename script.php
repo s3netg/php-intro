@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+$_SESSION['Mensagem-de-erro']='';
+
 $categorias = [];
 
 $categorias[]="Infantil";
@@ -13,27 +16,26 @@ $classifica ='';
 
 
 if(empty($nome)){
-    echo "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>";
-
-    echo 'o nome não pode ser vazio';
-    return ;
-}
-
-if (strlen($nome) < 3){
-    echo "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>";
-
-    echo ' o nome deve conter mais de 3 caracters';
-    return;
-}
-if (strlen($nome) > 40){
-    echo ' o nome é muito extenso';
+    $_SESSION['Mensagem-de-erro']='O nome não pode ser vazio';
+    header('location: index.php');
     return;
 }
 
-if(!is_numeric($idade)){
-    echo "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>";
+else if (strlen($nome) < 3){
+    $_SESSION['Mensagem-de-erro']='O nome deve conter pelo menos 3 caracteres';
+    header('location: index.php');
+    return;
+}
+else if (strlen($nome) > 40){
+    $_SESSION['Mensagem-de-erro']='O nome é muito extenso';
+    header('location: index.php');
+    return;
+}
 
-    echo ' a idade tem que ser numerica ';
+else if(!is_numeric($idade)){
+   
+    $_SESSION['Mensagem-de-erro']='a idade tem que ser numerica';
+    header('location: index.php');
     return;
 
 }
@@ -41,16 +43,21 @@ if(!is_numeric($idade)){
 if($idade >=6 && $idade <=12)
 {
     $classifica= 'infantil';
+    $_SESSION['Mensagem-de-sucesso']=$nome  .' e um nadadador categoria ' .$classifica;;
+    header('location: index.php');
+    return;
 }
 else if($idade >=13 && $idade <=18)
 {
     $classifica=   'adolescente';
+    $_SESSION['Mensagem-de-sucesso']=$nome  .' e um nadadador categoria ' .$classifica;;
+    header('location: index.php');
+    return;
 }
 else
 {
     $classifica= 'adulto';
+    $_SESSION['Mensagem-de-sucesso']=$nome  .' e um nadadador categoria ' .$classifica;;
+    header('location: index.php');
+    return;
 }
-
-echo "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>";
-  
-echo "<h2> O nadador " .$nome ."  compete na categoria " .$classifica  ."</h2>";
