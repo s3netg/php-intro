@@ -1,47 +1,40 @@
 <?php
-    session_start();
+include "servicos/servicoMensagemSessao.php";
 ?>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <title>Bootstrap Example</title>
     <meta charset="utf-8">
+    <title>Formulário de inscrição</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
+<p>FORMULÁRIO PARA INSCRIÇÃO DE COMPETIDORES</p>
 
-    <form class="container" action="/script.php" method='post'>
-        <?php
+<form action="script.php" method="post">
+    <?php
+        $mensagemDeSucesso = obterMensagemSucesso();
+        if(!empty($mensagemDeSucesso))
+        {
+            echo $mensagemDeSucesso;
+        }
 
-            $mensagemdeerro = isset($_SESSION['Mensagem-de-erro']) ? $_SESSION['Mensagem-de-erro']:'';
-            $mensagemdesucesso = isset($_SESSION['Mensagem-de-sucesso']) ? $_SESSION['Mensagem-de-sucesso']:'';
-       
-            if(!empty($mensagemdeerro)){
-                echo $mensagemdeerro;
-            }else {
-                echo $mensagemdesucesso;
-            }
+        $mensagemDeErro = obterMensagemErro();
+        if(!empty($mensagemDeErro))
+        {
+            echo $mensagemDeErro;
+        }
+    ?>
+    <p>Seu nome: <input type="text" name="nome" /></p>
+    <p>Sua idade: <input type="text" name="idade" /></p>
+    <p><input type="submit" value="Enviar dados do competidor"/></p>
+</form>
 
-        ?>
-
-        <div class="form-group">
-            <label for="nome">Nome: </label>
-            <input type="text" class="form-control" name="nome" placeholder="Enter nome" id="nome">
-        </div>
-        <div class="form-group">
-            <label for="idade">Idade: </label>
-            <input type="text" class="form-control" name="idade" placeholder="idade" id="idade">
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar dados competitdor</button>
-    </form>
+</body>
 
 </html>
